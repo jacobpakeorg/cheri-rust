@@ -1817,6 +1817,8 @@ float_test! {
     }
 }
 
+// FIXME(cheri): space issues and removing this gives us enough to run the rest
+#[cfg(not(target_abi = "cheriot"))]
 float_test! {
     name: ln_gamma,
     attrs: {

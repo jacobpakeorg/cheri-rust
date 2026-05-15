@@ -58,12 +58,15 @@ done
 
 # if we need to clone the rtos
 if [[ ! -d "cheriot-rtos" ]]; then
-    git clone https://github.com/CHERIoT-Platform/cheriot-rtos --recursive --depth=1
+    # adds some missing float math libcalls
+    git clone https://github.com/jacobpake/cheriot-rtos \
+        --recursive --depth=1 --branch=wip-libcalls-for-rust
 fi
 
 # if we need to run xmake config
 if [[ ! -d ".xmake" || ! -d "build" ]]; then
-    xmake config --sdk="../../../build/host/llvm"
+    sdk_flag=${CHERIOT_SYSROOT_DIR:-"../../../build/host/llvm"}
+    xmake config --sdk="$sdk_flag"
 fi
 
 xmake build -r

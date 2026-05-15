@@ -21,33 +21,33 @@ mod u32;
 mod u64;
 mod u8;
 
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod bignum;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+// this is staying here because we ran out of room in num_rest and it uses a test_num gated macro
 mod carryless_mul;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod const_from;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // rustc-LLVM ERROR: Cannot select: t117: i32 = fp_to_fp16 t18
 mod dec2flt;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod float_iter_sum_identity;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // rustc-LLVM ERROR: Cannot select: t99: i32 = fp_to_fp16 t16
 mod flt2dec;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod ieee754;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // hangs, needs investigation
 mod int_log;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod int_sqrt;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod midpoint;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod nan;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod niche_types;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod ops;
-#[cfg(not(target_abi = "cheriot"))] // imported separately on cheriot
+#[cfg(not(target_abi = "cheriot"))] // available via num/rest.rs (test_num_rest)
 mod wrapping;
 
 /// Adds the attribute to all items in the block.
