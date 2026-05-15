@@ -1,0 +1,88 @@
+name: CI (CHERIoT)
+
+# fixme
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  x_test:
+    name: Run ./x test
+    runs-on: cirun-gcp-aarch64--${{ github.run_id }}
+    timeout-minutes: 240
+    steps:
+      - name: Check disk
+        run: df -h
+
+      - name: Install dependencies
+        run: |
+          set -eo pipefail
+          sudo apt-get update
+          sudo apt-get install -y pkg-config clang ninja-build lld cmake ccache perl libssl-dev git
+
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+          # TODO: src/ci/scripts/checkout-submodules.sh should be faster
+          submodules: recursive
+
+      - name: Check disk
+        run: df -h
+
+      - name: Generate bootstrap
+        run: ./cheri/gen_bootstrap.py -v
+
+      - name: Check environment
+        run: env
+
+      - name: Restore ccache cache
+        id: ccache-cache-restore
+        uses: actions/cache/restore@v5
+        with:
+          path: /home/runnerx/.cache/ccache
+          key: ${{ runner.os }}-ccache
+
+      - name: Check ccache stats
+        run: ccache --show-stats
+
+      - name: Build LLVM
+        run: CC="clang" CXX="clang++" ./x build llvm --ci=false
+
+      - name: Save ccache cache
+        id: ccache-cache-save
+        uses: actions/cache/save@v5
+        with:
+          path: /home/runnerx/.cache/ccache
+          key: ${{ steps.ccache-cache-restore.outputs.cache-primary-key }}
+
+      - name: Check disk
+        run: df -h
+
+      - name: Check ccache stats
+        run: ccache --show-stats
+
+      - name: Check (rust)
+        run: CC="clang" CXX="clang++" ./x check --ci=false
+
+      - name: Check disk
+        run: df -h
+
+      - name: Build rustfmt
+        run: CC="clang" CXX="clang++" ./x build rustfmt --ci=false
+
+      - name: Check disk
+        run: df -h
+
+      - name: Test tidy
+        run: CC="clang" CXX="clang++" ./x test tidy --ci=false
+
+      - name: Check disk
+        run: df -h
+
+      - name: Test
+        run: CC="clang" CXX="clang++" ./x test --skip src/tools/linkchecker --skip tests/rustdoc-ui --skip tests/run-make --skip tidy --ci=false
+
+      - name: Check disk
+        run: df -h
