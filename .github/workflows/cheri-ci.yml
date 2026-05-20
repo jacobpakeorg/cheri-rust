@@ -10,7 +10,7 @@ on:
 jobs:
   x_test:
     name: Run ./x test
-    runs-on: deleteme--${{ github.run_id }}
+    runs-on: warp-custom-test-1
     timeout-minutes: 240
     steps:
       - name: Check disk
