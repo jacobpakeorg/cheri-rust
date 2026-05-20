@@ -10,7 +10,7 @@ on:
 jobs:
   x_test:
     name: Run ./x test
-    runs-on: warp-custom-tiny-x86
+    runs-on: warp-ubuntu-latest-arm64-8x
     timeout-minutes: 240
     steps:
       - name: Check disk
