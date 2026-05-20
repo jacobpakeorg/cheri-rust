@@ -2,7 +2,7 @@ runners:
   - name: cirun-gcp-aarch64-runner
     cloud: gcp
     instance_type: n4a-standard-32
-    machine_image: ubuntu-minimal-2404-noble-arm64-v20260507
+    machine_image: debian-12-bookworm-arm64-v20260513
     region: us-east1-b
     preemptible: true
     extra_config:
